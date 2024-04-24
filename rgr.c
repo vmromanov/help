@@ -11,18 +11,18 @@ result* rgr(char* name)
 	if (file == NULL) { printf("cant open file"); return NULL; }
 	char lastsimb = getc(file);
 
-	char space;
+	char space; 
 	unsigned int counter = 0;
-	while ((space = fgetc(file)) != EOF)												//счётчик кол-ва пробелов
+	while ((space = fgetc(file)) != EOF)												
 		if (space == ' '&& space!=EOF) ++counter;
-	result* answers = malloc(counter * sizeof(result));						// колво пробелов +1 пополам - колво пар слов
+	result* answers = malloc((counter-1) * sizeof(result));						
 	if (answers == NULL) { printf("memmory allocation error(answers)"); return NULL; }
 	
 	fseek(file, 0, SEEK_SET); 
 
-	int maxlen = 0;
+	unsigned int maxlen = 0;
 	char c;
-	int counterm = 0;
+	unsigned int counterm = 0; // максимальная длинна слова
 	while ((c = fgetc(file)) != EOF) 
 	{
 		counterm = 0;
@@ -30,8 +30,10 @@ result* rgr(char* name)
 			counterm++;
 		if (counterm > maxlen) maxlen = counterm;
 	}
-	for (unsigned int i = 0; i < counter; ++i)
-		answers[i].where = calloc(counterm , sizeof(int));
+	for (unsigned int i = 0; i < counter-1; ++i)
+	answers[i].where = calloc(counterm , sizeof(int));
+	
+	
 	fseek(file, 0, SEEK_SET);
 	while (lastsimb != EOF)
 	{
@@ -82,19 +84,30 @@ result* rgr(char* name)
 			}
 			
 		}
+		
+		
+		
+		
 		++i;
 		lastsimb = fgetc(file);
 		fseek(file, -1, SEEK_CUR);
 		
-		
+		free(s1);free(s2);
 	}
-
-	for (unsigned int i = 0; i < counter; ++i)
+        
+        for (unsigned int u=0;u<counter-1;++u)
+        for (unsigned int m=0;m<counterm;++m)
+        if ((answers[u].where[m])==0)
+        if (m!=0)
+        {
+        answers[u].where = realloc(answers[u].where,(m+1)*sizeof(int));
+        if ((answers[u].where)==NULL){printf("realloc error");return answers;}
+        }
+	for (unsigned int i = 0; i < counter-1; ++i) //counter кол-во пробелов +1;
 	{
 		printf("amount: %u\n", answers[i].amount);
-		unsigned int k = answers[i].amount;
 		printf("positions: ");
-		for (unsigned int j = 0; j < k; ++j)
+		for (unsigned int j = 0; j < answers[i].amount; ++j)
 			printf("%u ", answers[i].where[j]);
 	}
 	fclose(file);
