@@ -12,7 +12,6 @@ result* rgr(char* name)
 {
 	FILE* file = fopen(name, "r");
 	if (file == NULL) { printf("cant open file"); return NULL; }
-	char lastsimb = getc(file);
 
 	char space;
 	unsigned int counter = 0;
@@ -55,7 +54,7 @@ result* rgr(char* name)
 		if (i < (unsigned)counter && fscanf(file, "%[^ ] %[^\n]\n", s1, s2) == 2) {
 
 			unsigned int amount = 0;
-			unsigned int position = 0;
+			
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
 				for (unsigned int j = 0; j < counter2; ++j)
@@ -120,7 +119,6 @@ result* rgr(char* name)
 		if (i < (unsigned)counter && fscanf(file, "%[^ ] %[^\n]\n", s1, s2) == 2) {
 
 			unsigned int amount = 0;
-			unsigned int position = 0;
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
 				for (unsigned int j = 0; j < counter2; ++j)
