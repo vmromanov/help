@@ -4,11 +4,11 @@
 
 
 
+
 result* rgr(char* name)
 {
 	FILE* file = fopen(name, "r");
 	if (file == NULL) { printf("cant open file"); return NULL; }
-	char lastsimb = getc(file);
 
 	char space;
 	unsigned int counter = 0;
@@ -19,12 +19,12 @@ result* rgr(char* name)
 
 	result* answers = malloc((counter) * sizeof(result));
 	if (answers == NULL) { printf("memmory allocation error(answers)"); return NULL; }
-	
-	for (unsigned int i =0;i<counter;++i)
+
+	for (unsigned int i = 0; i < counter; ++i)
 		(answers[i].amount) = 0;
-	
+
 	fseek(file, 0, SEEK_SET);
-	for (unsigned int i=0;i<counter;++i)
+	for (unsigned int i = 0; i < counter; ++i)
 	{
 		unsigned int counter1 = 0;
 		unsigned int counter2 = 0;
@@ -46,19 +46,18 @@ result* rgr(char* name)
 		fseek(file, -(elements)-3, SEEK_CUR);
 
 
-		
-	
-		if (i < (unsigned)counter && fscanf(file, "%[^ ] %[^\n]\n", s1, s2) == 2) {
+
+
+		fscanf(file, "%[^ ] %[^\n]\n", s1, s2);
 
 			unsigned int amount = 0;
-			unsigned int position = 0;
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
 				for (unsigned int j = 0; j < counter2; ++j)
 				{
-					char s1s = s1[k + j];
-					char s2s = s2[j];
-					if (s1s != s2s) {
+				
+					if (s1[k + j] != s2[j]) 
+					{
 						found = 0;
 						break;
 					}
@@ -70,11 +69,10 @@ result* rgr(char* name)
 				}
 
 			}
-			(answers[i].amount)= amount;
-		}
-
+			(answers[i].amount) = amount;
 		
-		lastsimb = fgetc(file);
+
+
 		fseek(file, -1, SEEK_CUR);
 
 	}
@@ -88,7 +86,7 @@ result* rgr(char* name)
 			(answers[i].where[j]) = 0;
 	}
 
-	fseek(file, 0, SEEK_SET); 
+	fseek(file, 0, SEEK_SET);
 
 	for (unsigned int i = 0; i < counter; ++i)
 	{
@@ -111,19 +109,16 @@ result* rgr(char* name)
 		int elements = (int)(counter1 + counter2);
 		fseek(file, -(elements)-3, SEEK_CUR);
 
-
+                fscanf(file, "%[^ ] %[^\n]\n", s1, s2);
 		
-		if (i < (unsigned)counter && fscanf(file, "%[^ ] %[^\n]\n", s1, s2) == 2) {
 
 			unsigned int amount = 0;
-			unsigned int position = 0;
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
 				for (unsigned int j = 0; j < counter2; ++j)
 				{
-					char s1s = s1[k + j];
-					char s2s = s2[j];
-					if (s1s != s2s) {
+				    
+					if (s1[k + j] != s2[j]) {
 						found = 0;
 						break;
 					}
@@ -135,9 +130,10 @@ result* rgr(char* name)
 					k += counter2 - 1;
 				}
 			}
-		}
+		
 
-
+            free(s1);
+            free(s2);
 	}
 
 
@@ -148,7 +144,7 @@ result* rgr(char* name)
 		for (unsigned int j = 0; j < answers[i].amount; ++j)
 			printf("%u ", answers[i].where[j]);
 	}
+	
 	fclose(file);
-
 	return answers;
 }

@@ -5,7 +5,7 @@ typedef struct result{
 }result;
 
 
-
 result* rgr(char* name);
+
 
 
