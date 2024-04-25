@@ -54,7 +54,6 @@ result* rgr(char* name)
 		if (i < (unsigned)counter && fscanf(file, "%[^ ] %[^\n]\n", s1, s2) == 2) {
 
 			unsigned int amount = 0;
-			
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
 				for (unsigned int j = 0; j < counter2; ++j)
@@ -77,7 +76,6 @@ result* rgr(char* name)
 		}
 
 
-		lastsimb = fgetc(file);
 		fseek(file, -1, SEEK_CUR);
 
 	}
@@ -139,7 +137,8 @@ result* rgr(char* name)
 			}
 		}
 
-
+            free(s1);
+            free(s2);
 	}
 
 
