@@ -36,20 +36,25 @@ result* rgr(char* name)
 		while ((simb = fgetc(file)) != '\n' && simb != EOF)
 			if (simb != '\n' && simb != ' ')counter2++;
 
-		char* s1 = malloc(sizeof(char) * counter1);
+		char* s1 = malloc(sizeof(char) * (counter1+1));
 		if (s1 == NULL) { printf("s1 memmory allocation error"); return NULL; }
-
-		char* s2 = malloc(sizeof(char) * counter2);
+                  
+		char* s2 = malloc(sizeof(char) * (counter2+1));
 		if (s2 == NULL) { printf("s2 memmory allocation error"); return NULL; }
-
+                  
 		int elements = (int)(counter1 + counter2);
 		fseek(file, -(elements)-3, SEEK_CUR);
 
 
-
-
-		fscanf(file, "%[^ ] %[^\n]\n", s1, s2);
-
+                char ch;
+               unsigned int u=0;
+               while ((ch=fgetc(file))!=' ')
+               {s1[u]=ch;++u;}
+               u=0;
+               while ((ch=fgetc(file))!='\0'&& ch!='\n'&& ch!=EOF)
+               {s2[u]=ch;++u;}
+		s1[counter1]='\0';
+		s2[counter2]='\0'; 
 			unsigned int amount = 0;
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
 				int found = 1;
@@ -100,17 +105,24 @@ result* rgr(char* name)
 		while ((simb = fgetc(file)) != '\n' && simb != EOF)
 			if (simb != '\n' && simb != ' ')counter2++;
 
-		char* s1 = malloc(sizeof(char) * counter1);
+		char* s1 = malloc(sizeof(char) * (1+counter1));
 		if (s1 == NULL) { printf("s1 memmory allocation error"); return NULL; }
 
-		char* s2 = malloc(sizeof(char) * counter2);
+		char* s2 = malloc(sizeof(char) * (1+counter2));
 		if (s2 == NULL) { printf("s2 memmory allocation error"); return NULL; }
 
 		int elements = (int)(counter1 + counter2);
 		fseek(file, -(elements)-3, SEEK_CUR);
 
-                fscanf(file, "%[^ ] %[^\n]\n", s1, s2);
-		
+                char ch;
+               unsigned int u=0;
+               while ((ch=fgetc(file))!=' ')
+               {s1[u]=ch;++u;}
+               u=0;
+               while ((ch=fgetc(file))!='\0'&& ch!='\n'&& ch!=EOF)
+               {s2[u]=ch;++u;}
+		s1[counter1]='\0';
+		s2[counter2]='\0';
 
 			unsigned int amount = 0;
 			for (unsigned int k = 0; k <= (counter1 - counter2); ++k) {
@@ -148,3 +160,4 @@ result* rgr(char* name)
 	fclose(file);
 	return answers;
 }
+
